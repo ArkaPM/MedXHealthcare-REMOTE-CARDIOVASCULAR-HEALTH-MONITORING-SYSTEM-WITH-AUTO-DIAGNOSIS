@@ -1,0 +1,117 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html height="100%">
+ <head>
+    <meta charset="UTF-8">
+    <title>MedX: A M2M based HealthCare System</title>
+    <!-- Load the Firebase library before loading the body. -->
+    <script src="https://cdn.firebase.com/js/client/2.4.2/firebase.js"></script>
+
+    <!-- Load the jQuery library, which we'll use to manipulate HTML elements with Javascript. -->
+    <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+
+    <!-- Load Bootstrap stylesheet, which will is CSS that makes everything prettier and also responsive (aka will work on all devices of all sizes). -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    
+    <script type="text/javascript">
+        $(document).ready(function ()
+        {
+            GetData();
+        });
+
+        function GetData()
+        {
+            var url = 'https://api.thingspeak.com/channels/695679/feeds.json?key=QORAB2WCPBDLJL4S&results=1';
+            $.ajax
+            ({
+                url: url,
+                type: 'GET',
+                contentType: "application/json",
+                //dataType: "json",
+                //crossDomain: true,
+                success: function (data, textStatus, xhr) {
+                    $.each(data, function (i, item) {
+                        if (i == 'feeds') {
+                            var ubound = item.length;
+                            $('#txtField1').val(item[ubound - 1].field1);
+			    $('#txtField2').val(item[ubound - 1].field2);
+			    $('#txtField3').val(item[ubound - 1].field3);
+			    $('#txtField4').val(item[ubound - 1].field4);
+			    $('#txtField5').val(item[ubound - 1].field5);
+                        }
+                    });
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    alert(errorThrown);
+                }
+            });
+
+            setTimeout(GetData, 10000);
+        }
+    </script>
+  </head>
+  
+  <body>
+    <div class="container">
+      <h1>Click Submit to load to Firebase</h1>
+    
+    <form id="recommendationForm">
+        <div class="form-group">
+          <label for="medxToken">Token</label>
+          <input class="form-control" id="txtField1" type="text" placeholder="Token ID">
+        </div>
+
+        <div class="form-group">
+          <label for="medxSystole">Systolic Pressure (mmHg)</label>
+          <input class="form-control" id="txtField2" type="text" placeholder="Systolic Pressure (mmHg)">
+        </div>
+
+        <div class="form-group">
+          <label for="medxDiastole">Diastolic Pressure (mmHg)</label>
+          <input class="form-control" id="txtField3" type="text" placeholder="Diastolic Pressure (mmHg)">
+        </div>
+
+        <div class="form-group">
+          <label for="medxHeartRate">Heart Rate (bpm)</label>
+          <input class="form-control" id="txtField4" type="text" placeholder="Heart Rate (bpm)">
+        </div>
+
+        <div class="form-group">
+          <label for="medxBodyTemp">Body Temperature (Farenheit)</label>
+          <input class="form-control" id="txtField5" type="text" placeholder="Body Temperature (Farenheit)">
+        </div>
+
+        <!-- When you click this button, trigger the submit event on this form. -->
+        <div class="form-group">
+        <button class="form-control" type="button" onclick="savedata()">Submit</button>
+        </div>
+    </form>
+    </div>
+    <!-- Load the application script, which will save data to our Firebase app when we click the button. -->
+    <script>
+        var messagesRef = new Firebase('https://m2mhealthcare.firebaseio.com');
+        var messageToken = document.getElementById('txtField1');
+        var messageSystole = document.getElementById('txtField2');
+        var messageDiastole = document.getElementById('txtField3');
+        var messageHeartRate = document.getElementById('txtField4');
+        var messageBodyTemp = document.getElementById('txtField5');
+        // Save data to firebase
+        function savedata(){
+          var Token = messageToken.value;
+          var Systole = messageSystole.value;
+          var Diastole = messageDiastole.value;
+          var HeartRate = messageHeartRate.value;
+          var BodyTemp = messageBodyTemp.value;
+          messagesRef.push({"Token ID": Token,
+                            "Systolic Pressure (mmHg)": Systole,
+                            "Diastolic Pressure (mmHg)": Diastole,
+                            "Heart Rate (bpm)": HeartRate,
+                            "Body Temperature (Farenheit)": BodyTemp});
+          messageToken.value = '';
+          messageSystole.value = '';
+          messageDiastole.value = '';
+          messageHeartRate.value = '';
+          messageBodyTemp.value = '';
+        }
+    </script>
+  </body>
+</html>

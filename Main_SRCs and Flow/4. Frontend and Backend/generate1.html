@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<style>
+iframe{
+	position:absolute;
+	top:150px; 
+	right:50px; 
+	width:30%;
+	height:90%;
+}
+body{
+	background-color: black;
+}
+
+.bg{
+  /* The image used */
+  background-color: white;
+
+  /* Full height */
+  height: 100%; 
+
+  /* Center and scale the image nicely */
+  background-position: low;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.bg-overlay {
+  position: relative;
+  z-index: 1; }
+  .bg-overlay::after {
+    position: absolute;
+    content: "";
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    background-color: rgba(0, 0, 0, 0.4); }
+	
+.register_form{
+		margin-left:33%;
+		margin-top: 6%;
+		}
+</style>
+
+<head>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="google-signin-client_id" content="857921945169-3a9d5u4hdjbjl164f082rpludrth49o5.apps.googleusercontent.com">
+    <!-- Title -->
+    <title>MedX HealthCare Report</title>
+
+    <!-- Favicon -->
+    <link rel="icon" href="./img/core-img/favicon.png">
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+	<script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+	<script src="https://cdn.firebase.com/js/client/2.4.2/firebase.js"></script>
+	<script type="text/javascript">
+        $(document).ready(function ()
+        {
+            GetData();
+        });
+
+        function GetData()
+        {
+            var url = 'https://api.thingspeak.com/channels/695679/feeds.json?key=QORAB2WCPBDLJL4S&results=1';
+            $.ajax
+            ({
+                url: url,
+                type: 'GET',
+                contentType: "application/json",
+                //dataType: "json",
+                //crossDomain: true,
+                success: function (data, textStatus, xhr) {
+                    $.each(data, function (i, item) {
+                        if (i == 'feeds') {
+                            var ubound = item.length;
+                $('#tok').val(item[ubound - 1].field1);
+			    $('#bp').val(item[ubound - 1].field2);
+			    $('#hr').val(item[ubound - 1].field4);
+			    
+                        }
+                    });
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    alert(errorThrown);
+                }
+            });
+
+            setTimeout(GetData, 10000);
+        }
+    </script>
+
+
+</head>
+
+<body class="bg">
+    <!-- Preloader -->
+    <div id="preloader">
+        <div class="loader"></div>
+    </div>
+    <!-- /Preloader -->
+
+    <!-- Top Search Form Area -->
+    <div class="top-search-area">
+        <div class="modal fade" id="searchModal" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <!-- Close -->
+                        <button type="button" class="btn close-btn" data-dismiss="modal"><i class="ti-close"></i></button>
+                        <!-- Form -->
+                        <form action="index.html" method="post">
+                            <input type="search" name="top-search-bar" class="form-control" placeholder="Search and hit enter...">
+                            <button type="submit">Search</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header Area Start -->
+    <header class="header-area">
+        <!-- Main Header Start -->
+        <div class="main-header-area">
+            <div class="classy-nav-container breakpoint-off">
+                <div class="container">
+                    <!-- Classy Menu -->
+                    <nav class="classy-navbar justify-content-between" id="alimeNav">
+
+                        <!-- Logo -->
+                        <a class="nav-brand" href="./home.html"><img src="./img/core-img/logo.png" width="100" height="20" alt=""></a>
+
+                        <!-- Navbar Toggler -->
+                        <div class="classy-navbar-toggler">
+                            <span class="navbarToggler"><span></span><span></span><span></span></span>
+                        </div>
+
+                        <!-- Menu -->
+                        <div class="classy-menu">
+                            <!-- Menu Close Button -->
+                            <div class="classycloseIcon">
+                                <div class="cross-wrap"><span class="top"></span><span class="bottom"></span></div>
+                            </div>
+                            <!-- Nav Start -->
+                            <div class="classynav">
+                                <ul id="nav">
+                                    <li class="active"><a href="./home.html">Home</a></li>
+									<li><a href="./about.html">About</a></li>
+                                    <li><a href="#">How To</a>
+                                        <ul class="dropdown">
+                                            <li><a href="./hardware.html">- Hardware</a></li>
+                                            <li><a href="./chatbot.html">- Chatbot</a></li>
+                                            <li><a href="./report.html">- Report</a></li>
+                                        </ul>
+										
+                                    </li>
+                                    
+                                    <li><a href="./login.html">Login</a></li>
+									<li><a href="./register.html">Register</a></li>
+                                </ul>                       
+                            </div>
+                            <!-- Nav End -->
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- Header Area End -->
+	
+    <!-- Contact Area Start --><div class="alime-portfolio-area section-padding-80 clearfix">
+	<div class="register_form"> 
+		<div class="content">
+			<h2> Fill in the details</h2>                
+				<form style="align:left;color:#000000">
+				    <label for="des"class="mr-sm-2" > Token </label><br /><label class="mr-sm-2"><input type="text"  style="width:223%;margin-left:60px;padding:5%" class="form-control" id="tok" placeholder="Enter Token"></label><br>
+					<label for="des"class="mr-sm-2" > Age </label><br /><label class="mr-sm-2"><input type="text"  style="width:223%;margin-left:60px;padding:5%" class="form-control" id="age" placeholder="Enter Age"></label><br> 
+	                <label for="des"class="mr-sm-2" > Gender (0: Male 1: Female)</label><br /><label class="mr-sm-2"><input type="text"  style="width:223%;margin-left:60px;padding:5%" class="form-control" id="gen" placeholder="M/F"></label><br> 
+	                <label for="des"class="mr-sm-2" > Chest Pain (On a scale of 1-4) </label><br /><label class="mr-sm-2"><input type="text"  style="width:223%;margin-left:60px;padding:5%" class="form-control" id="che" placeholder="Pain Level"></label><br> 
+	                <label for="des"class="mr-sm-2" > Blood Pressure (Enter Value)</label><br /><label class="mr-sm-2"><input type="text"  style="width:223%;margin-left:60px;padding:5%" class="form-control" id="bp" placeholder="Blood Pressure"></label><br> 
+	                <label for="des"class="mr-sm-2" > Cholestrol Level</label><br /><label class="mr-sm-2"><input type="text"  style="width:223%;margin-left:60px;padding:5%" class="form-control" id="chol" placeholder="cholestrol level"></label><br> 
+					<label for="des"class="mr-sm-2" > Fasting Blood Sugar (0: >=120 mg/dl 1: <=120mg/dl)</label><br /><label class="mr-sm-2"><input type="text"  style="width:223%;margin-left:60px;padding:5%" class="form-control" id="fbs" placeholder="Sugar"></label><br> 
+	                <label for="des"class="mr-sm-2" > Resting ECG (0/2 2: Normal)</label><br /><label class="mr-sm-2"><input type="text"  style="width:223%;margin-left:60px;padding:5%" class="form-control" id="ecg" placeholder="ECG"></label><br> 
+	                <label for="des"class="mr-sm-2" > HeartRate (Enter Value)</label><br /><label class="mr-sm-2"><input type="text"  style="width:223%;margin-left:60px;padding:5%" class="form-control" id="hr" placeholder="Heart Rate"></label><br> 
+					<label for="des"class="mr-sm-2" > Excercise Induced Angina(0:No 1:Yes) </label><br /><label class="mr-sm-2"><input type="text"  style="width:223%;margin-left:60px;padding:5%" class="form-control" id="ia" placeholder="Yes/No"></label><br> 
+					<label for="des"class="mr-sm-2" > ST Depression (Value)</label><br /><label class="mr-sm-2"><input type="text"  style="width:223%;margin-left:60px;padding:5%" class="form-control" id="std" placeholder="ST Depression"></label><br> 
+					<label for="des"class="mr-sm-2" > Slope of the highest ST section (1:Down Sloping 2:Flat 3:Un-Sloping)</label><br /><label class="mr-sm-2"><input type="text"  style="width:223%;margin-left:60px;padding:5%" class="form-control" id="slp" placeholder="(Down/Up/Equal)"></label><br> 
+					<label for="des"class="mr-sm-2" > Vessel (0-3) </label><br /><label class="mr-sm-2"><input type="text"  style="width:223%;margin-left:60px;padding:5%" class="form-control" id="ves" placeholder="(Yes/No)"></label><br> 
+                    <label for="des"class="mr-sm-2" > Thal (3:Normal 6:Fixed 7:Reversible Defect)</label><br /><label class="mr-sm-2"><input type="text"  style="width:223%;margin-left:60px;padding:5%" class="form-control" id="tha" placeholder="(Fixed/Reversible/No)"></label><br> 
+					<label style="text-align:center"class="n"></label><button type="button" class="btn btn-danger" onclick="datasaved()"> Submit</button>
+                    <label style="text-align:center"class="n"></label><button type="button" class="btn btn-danger" ><a href="http://192.168.43.117/csv_to_web1.html"> Generate Report</a></button>
+    </div>
+                
+            </div>
+			</div>
+  <!-- Contact Area End -->
+
+    <!-- Footer Area Start -->
+    <footer class="footer-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="footer-content d-flex align-items-center justify-content-between">
+                        <!-- Copywrite Text -->
+                       
+                        <!-- Footer Logo -->
+                        <div class="footer-logo">
+                            <a href="#"><img src="img/core-img/logo2.png" alt=""></a>
+                        </div>
+                        <!-- Social Info -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- Footer Area End -->
+
+    <!-- **** All JS Files ***** -->
+    <!-- jQuery 2.2.4 -->
+    <script src="js/jquery.min.js"></script>
+    <!-- Popper -->
+    <script src="js/popper.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="js/bootstrap.min.js"></script>
+    <!-- All Plugins -->
+    <script src="js/alime.bundle.js"></script>
+    <!-- Active -->
+    <script src="js/default-assets/active.js"></script>
+    <script>
+        var messagesRef = new Firebase('https://finalmedx.firebaseio.com/');
+        var messageToken = document.getElementById('tok');
+        var messageAge = document.getElementById('age');
+        //var messageDateOfBirth = document.getElementById('dob');
+        var messageGender = document.getElementById('gen');
+        
+        var messageChestPain = document.getElementById('che');
+		var messageBloodPressure = document.getElementById('bp');
+		var messageCholestrol = document.getElementById('chol');
+		var messageFastingBloodSugar = document.getElementById('fbs');
+		var messageRestingECG = document.getElementById('ecg');
+		var messageHeartRate = document.getElementById('hr');
+		var messageInducedAgina = document.getElementById('ia');
+		var messageSTDepression = document.getElementById('std');
+		var messageSlope = document.getElementById('slp');
+		var messageVessel = document.getElementById('ves');
+		var messageThal = document.getElementById('tha');
+		// Save data to firebase
+        function datasaved(){
+          var Token = messageToken.value;
+          var Age = messageAge.value;
+          //var DateOfBirth = messageDateOfBirth.value;
+          var Gender = messageGender.value;
+		  var ChestPain = messageChestPain.value;
+		  var BloodPressure = messageBloodPressure.value;
+		  var Cholestrol = messageCholestrol.value;
+		  var FastingBloodSugar = messageFastingBloodSugar.value;
+		  var RestingECG = messageRestingECG.value;
+		  var HeartRate = messageHeartRate.value;
+          var InducedAgina = messageInducedAgina.value;
+          var STDepression = messageSTDepression.value;
+          var Slope = messageSlope.value;
+          var Vessel = messageVessel.value;
+          var Thal = messageThal.value; 
+		  
+		  
+		  
+		  messagesRef.push({"Age": Age,
+                            //"DateOfBirth": DateOfBirth,
+                            
+                            "Gender":Gender,
+							"ChestPain":ChestPain ,
+							"BloodPressure":BloodPressure,
+							"Cholestrol":Cholestrol,
+							"FastingBloodSugar":FastingBloodSugar,
+							"RestingECG":RestingECG,
+							"HeartRate":HeartRate,
+							"InducedAgina":InducedAgina,
+                            "STDepression":STDepression,
+							"Slope":Slope,
+							"Vessel":Vessel,
+							"Thal":Thal});
+		  messageToken.value = '';
+          messageAge.value = '';
+          //messageDateOfBirth.value = '';
+          messageGender.value = '';
+          messageChestPain.value = '';
+		  messageBloodPressure.value = '';
+		  messageCholestrol.value = '';
+		  messageFastingBloodSugar.value = '';
+		  messageRestingECG.value = '';
+		  messageHeartRate.value = '';
+		  messageInducedAgina.value = '';
+		  messageSTDepression.value = '';
+		  messageSlope.value = '';
+		  messageVessel.value = '';
+		  messageThal.value = '';
+        }
+    </script>
+</body>
+
+
+</html>

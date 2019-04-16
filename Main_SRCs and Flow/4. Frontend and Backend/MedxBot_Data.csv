@@ -1,0 +1,2 @@
+Age_in_years,Amount_of_stress_at_job_1_to_7,Consistency_of_feces,Current_Symptoms,Dietary_habits,Email_ID,Exercise_doer_or_not,Family_History_of_diseases,Frequency_of_Urination,Gender,Height_in_cms,History_of_Prescribed_Mediction,Lifestyle_habits,Name,Occupation,Time_Period_Of_Current_Symptoms,Token_ID,Weight_in_kgs
+42,4,once,ok,vegan,arka@gmail.com,no,"Y,N,Y,Y",regular,male,"{'amount': 171, 'unit': 'cm'}","Y,N,N,Y",laborious,arka,engineer,ok,17,"{'amount': 71, 'unit': 'kg'}"
